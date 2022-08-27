@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block nav %}
+    {% if request.user.is_authenticated %}
+{#    <li class="nav-item">#}
+{#        <a class="nav-link" href="{% url "webapp:project_work_create" project.pk %}">Добавление задачи в проект</a>#}
+{#    </li>#}
+        {% if perms.webapp.change_product %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "webapp:update_product" product.pk %}">Редактировать товар</a>
+    </li>
+            {% endif %}
+    <li class="nav-item">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productDeleteModal">
+            Удалить
+        </button>
+    </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ test }}
+
+    <p>
+        Название продукта: {{ product.name }}
+    </p>
+    <p>
+      Категория:  {{ product.category }}
+    </p>
+    <p>
+       Описание: {{ product.description }}
+    </p>
+    <p>
+       <img src="#" class="card-img-top w-25" alt="...">
+    </p>
+
+    <a href="{% url "webapp:index" %}">На главную</a>
+
+
+    <div class="modal fade" id="productDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productDeleteModal">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены что хотите удалить продукт {{ product.name }}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="{% url "webapp:delete_product" product.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Да</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

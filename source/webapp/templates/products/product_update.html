@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Редактирование товара{% endblock %}
+
+{% block content %}
+    <h1>Update Product</h1>
+    <form action="" method="post">
+        {% include "partial/form.html" with button_text="Изменить"%}
+    </form>
+    <a href="{% url "webapp:index" %}">На главную</a>
+{% endblock %}

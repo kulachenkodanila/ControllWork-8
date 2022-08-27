@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Удаление продукта{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+    {% include "partial/form.html" with button_text="Удалить" %}
+</form>
+    <a href="{% url "webapp:product_view" product.pk %}">Нет</a>
+{% endblock %}
