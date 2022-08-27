@@ -2,15 +2,15 @@
 {% block nav %}
     {% if request.user.is_authenticated %}
         {% if perms.webapp.change_product %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% url "webapp:update_product" product.pk %}">Редактировать товар</a>
-    </li>
-            {% endif %}
-    <li class="nav-item">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productDeleteModal">
-            Удалить
-        </button>
-    </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url "webapp:update_product" product.pk %}">Редактировать товар</a>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productDeleteModal">
+                Удалить
+            </button>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url "webapp:product_review_create" product.pk %}">Добавить отзыв</a>
         </li>
@@ -24,13 +24,13 @@
         Название продукта: {{ product.name }}
     </p>
     <p>
-      Категория:  {{ product.category }}
+        Категория: {{ product.category }}
     </p>
     <p>
-       Описание: {{ product.description }}
+        Описание: {{ product.description }}
     </p>
     <p>
-       <img src="#" class="card-img-top w-25" alt="...">
+        <img src="#" class="card-img-top w-25" alt="...">
     </p>
 
     <h3 class="my-3 text-center">Отзывы</h3>
@@ -45,10 +45,16 @@
                         <p class="card-text">Оценка: {{ review.mark }}</p>
                     </div>
                     {% if request.user.is_authenticated %}
-                    <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
-                        <a class="btn btn-danger" href="{% url "webapp:update_review" review.pk %}">Изменить отзыв</a>
-                        <a class="btn btn-warning" href="{% url "webapp:delete_review" review.pk %}">Удалить отзыв</a>
-                    </div>
+                        <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
+                            {% if perms.webapp.change_review %}
+                                <a class="btn btn-danger" href="{% url "webapp:update_review" review.pk %}">Изменить
+                                    отзыв</a>
+                            {% endif %}
+                            {% if perms.webapp.delete_review %}
+                                <a class="btn btn-warning" href="{% url "webapp:delete_review" review.pk %}">Удалить
+                                    отзыв</a>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 </div>
             </div>
