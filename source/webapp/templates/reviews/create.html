@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Добавить отзыв{% endblock %}
+
+{% block content %}
+    <h1>Add review</h1>
+    <form action="" method="post">
+        {% include "partial/form.html" with button_text="Создать" %}
+    </form>
+    <a href="{% url "webapp:index" %}">На главную</a>
+{% endblock %}
